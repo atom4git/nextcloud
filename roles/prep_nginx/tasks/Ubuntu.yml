@@ -31,9 +31,9 @@
     autoremove: true
     state: latest
 
-- name: install needed packages
-  apt:
-    name:
-      - python-pip
-      - python-netaddr
-    state: latest
+# - name: install needed packages
+#   apt:
+#     name:
+#       - python-pip
+#       - python-netaddr
+#     state: latest

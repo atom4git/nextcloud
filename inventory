@@ -1,5 +1,5 @@
 [nextcloud]
-localhost ansible_connection=local
+nsrv
 
 [nextcloud:vars]
 
@@ -23,6 +23,7 @@ ssl_certificate_type  = 'selfsigned'
 
 #
 # Nextcloud varibales
+nc_version           = 'latest' 
 
 # web ports
 nc_web_port          = 80
@@ -36,11 +37,11 @@ nc_admin             = 'admin'
 nc_passwd            = ''             # leave empty to generate random password
 
 # database settings
-# nc_db_type          = 'mysql'        # (MariaDB)
-nc_db_type           = 'pgsql'        # (PostgreSQL)
-nc_db_host           = 'localhost'
-nc_db                = 'nextcloud'
-nc_db_user           = 'nextcloud'
+nc_db_type          = 'mysql'        # (MariaDB)
+#nc_db_type           = 'pgsql'        # (PostgreSQL)
+nc_db_host           = '192.168.2.58'
+nc_db                = 'nextcloud_db'
+nc_db_user           = 'nextcloud_db'
 nc_db_passwd         = ''             # leave empty to generate random password
 
 # Nextcloud mail setup
@@ -58,7 +59,7 @@ nc_mail_smtpname     =
 nc_mail_smtppwd      =
 
 # php Version
-php_version          = '7.3'
+php_version          = '8.2'
 
 # Install turn server for Nextcloud Talk
 # currently broken for https://help.nextcloud.com/t/cannot-install-talk-on-fresh-nextcloud-18-install/68613

@@ -28,12 +28,12 @@
     - daemons_enable_cluster_mode
     - httpd_execmem
 
-- name: enable seboolean settings
-  command: semodule -i {{ role_path }}/files/{{ item }}
-  loop:
-    - httpd-to-php-fpm.pp
-    - httpd-to-redis-socket.pp
-    - httpd-to-upload-tmp.pp
+# - name: enable seboolean settings
+#   command: semodule -i {{ role_path }}/files/{{ item }}
+#   loop:
+#     - httpd-to-php-fpm.pp
+#     - httpd-to-redis-socket.pp
+#     - httpd-to-upload-tmp.pp
 
 - name: restorecon 
   command: restorecon -Rv {{ item }}
