@@ -48,6 +48,13 @@
       - php{{ php_version }}-ldap
       - php{{ php_version }}-bcmath  
       - php{{ php_version }}-gmp
+      - php{{ php_version }}-cli
+      - php{{ php_version }}-imagick
+      - php{{ php_version }}-ctype
+      - php{{ php_version }}-dom
+      - php{{ php_version }}-posix
+      - php{{ php_version }}-memcached
+      - php{{ php_version }}-mysql
       - php-apcu
       - php-imagick
       - php-smbclient
