@@ -56,6 +56,7 @@
       - php{{ php_version }}-memcached
       - php{{ php_version }}-mysql
       - php-apcu
+      - php-json
       - php-imagick
       - php-smbclient
       - php-redis
