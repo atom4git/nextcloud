@@ -1,6 +1,10 @@
 ---
 # Ubuntu related OS tasks
 
+- name: Update apt cache
+  apt:
+    update_cache: yes
+
 - name: apt dist-upgrade
   apt:
     upgrade: dist

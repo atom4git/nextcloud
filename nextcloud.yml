@@ -6,9 +6,10 @@
 
   roles:
     # - { role: prep_ufw,         when: install_ufw == 'true' and (ansible_os_family == "Debian" or ansible_os_family == "Ubuntu") }
-    # - prep_os
+    - prep_os
     # - prep_redis
-    - prep_nginx
+    # - prep_nginx
+    - prep_apache2
     - prep_php
     - { role: prep_mariadb,        when: (nc_db_type == 'mysql') and (nc_db_host == 'localhost') }
     # - { role: prep_postgres,       when: (nc_db_type == 'pgsql') and (nc_db_host == 'localhost') }

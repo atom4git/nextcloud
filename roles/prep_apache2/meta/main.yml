@@ -1,6 +1,6 @@
 galaxy_info:
   author: Reiner Nippes
-  description: Basic os setup of nextcloud server
+  description: Basic setup of nextcloud nginx server
   company: nippes.it
 
   # If the issue tracker for your role is not on github, uncomment the
@@ -45,5 +45,6 @@ galaxy_info:
     # NOTE: A tag is limited to a single word comprised of alphanumeric characters.
     #       Maximum 20 tags per role.
 
-# dependencies:
-#   - prep_nginx
+dependencies: []
+  # List your role dependencies here, one per line. Be sure to remove the '[]' above,
+  # if you add dependencies to this list.

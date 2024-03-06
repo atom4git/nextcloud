@@ -1,0 +1,36 @@
+<VirtualHost *:80>
+    Protocols h2 http/1.1
+    ServerAdmin admin@{{ fqdn }}
+    DocumentRoot "{{ nc_web_root }}"
+
+    ServerName {{ fqdn }}
+
+    ErrorLog ${APACHE_LOG_DIR}/nextcloud_error.log
+    CustomLog ${APACHE_LOG_DIR}/nextcloud_access.log combined
+
+    <Directory "{{ nc_web_root }}">
+        Options +FollowSymlinks
+        AllowOverride All
+        Require all granted
+        Satisfy Any
+
+        <IfModule mod_dav.c>
+            Dav off
+        </IfModule>
+
+        SetEnv HOME {{ nc_web_root }}
+        SetEnv HTTP_HOME {{ nc_web_root }}
+    </Directory>
+
+    <FilesMatch \.php$>
+        SetHandler "proxy:unix:/var/run/php/php8.3-fpm.sock|fcgi://localhost"
+    </FilesMatch>
+
+    ErrorDocument 403 /core/templates/403.php
+    ErrorDocument 404 /core/templates/404.php
+
+    <IfModule mod_headers.c>
+        Header always set Strict-Transport-Security "max-age=15552000; includeSubDomains"
+    </IfModule>
+
+</VirtualHost>

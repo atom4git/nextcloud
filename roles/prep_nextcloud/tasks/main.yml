@@ -37,34 +37,41 @@
   # - name: flush all handlers to restart server
   #   meta: flush_handlers
 
-  - name: start nginx
-    systemd:
-      name: nginx
-      state: started
+  # - name: start nginx
+  #   systemd:
+  #     name: nginx
+  #     state: started
 
   # # - name: restart redis
   # #   systemd:
   # #     name: redis
   # #     state: restarted
 
-  # - name: first setup nextcloud
-  #   become_user: "{{ web_user[ansible_distribution] }}"
-  #   become_flags: "{{ ansible_become_flags | default(omit) }}"
-  #   become: yes
-  #   shell: >
-  #     php occ  maintenance:install 
-  #     --database {{ nc_db_type }} 
-  #     --database-host "{{ nc_db_host }}" 
-  #     --database-name {{ nc_db }} 
-  #     --database-user {{ nc_db_user }} 
-  #     --database-pass {{ nc_db_passwd }} 
-  #     --admin-user {{ nc_admin }} 
-  #     --admin-pass {{ nc_passwd }} 
-  #     --data-dir {{ nc_datadir }}
-  #   args:
-  #     chdir: /var/www/nextcloud/
-  #     creates: /var/www/nextcloud/config/config.php
-  #   register: setup_nc
+  - name: first setup nextcloud
+    become_user: "{{ web_user[ansible_distribution] }}"
+    become_flags: "{{ ansible_become_flags | default(omit) }}"
+    become: yes
+    shell: >
+      php occ  maintenance:install 
+      --database {{ nc_db_type }} 
+      --database-host "{{ nc_db_host }}" 
+      --database-name {{ nc_db }} 
+      --database-user {{ nc_db_user }} 
+      --database-pass {{ nc_db_passwd }} 
+    #  --admin-user {{ nc_admin }} 
+    #  --admin-pass {{ nc_passwd }} 
+    #  --data-dir {{ nc_datadir }}
+    args:
+      chdir: /var/www/nextcloud/
+      creates: /var/www/nextcloud/config/config.php
+    register: setup_nc
+ 
+  - name: Replace 'https' with 'http' in Nextcloud config.php
+    ansible.builtin.replace:
+      path: /var/www/nextcloud/config/config.php
+      regexp: "'overwrite.cli.url' => 'https://nsrv',"
+      replace: "'overwrite.cli.url' => 'http://nsrv',"
+    notify: Restart Apache
  
   # - debug: var=setup_nc verbosity=2
   
@@ -123,13 +130,13 @@
   #     - db:add-missing-indices
   #     - db:convert-filecache-bigint
       
-  # - name: upgrade nextcloud
-  #   become_user: "{{ web_user[ansible_distribution] }}"
-  #   become_flags: "{{ ansible_become_flags | default(omit) }}"
-  #   become: yes
-  #   shell: php occ upgrade
-  #   args:
-  #     chdir: /var/www/nextcloud/
+  - name: upgrade nextcloud
+    become_user: "{{ web_user[ansible_distribution] }}"
+    become_flags: "{{ ansible_become_flags | default(omit) }}"
+    become: yes
+    shell: php occ upgrade
+    args:
+      chdir: /var/www/nextcloud/
 
   # - name: adjust app settings
   #   become_user: "{{ web_user[ansible_distribution] }}"

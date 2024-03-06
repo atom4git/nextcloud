@@ -21,6 +21,9 @@ ssl_certificate_type  = 'selfsigned'
 # uncomment if you want to use letsencrypt staging environment
 # cert_stage = '--staging'
 
+#server variables:
+srv_timezone         = 'America/Montreal'
+
 #
 # Nextcloud varibales
 nc_version           = 'latest' 
@@ -31,6 +34,9 @@ nc_ssl_port          = 443
 
 # data dir
 nc_datadir           = /var/www/nextcloud/data
+
+# nextcloud web root
+nc_web_root          = /var/www/nextcloud/
 
 # admin user
 nc_admin             = 'admin'
