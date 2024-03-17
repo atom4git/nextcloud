@@ -48,19 +48,20 @@
   # #     state: restarted
 
   - name: first setup nextcloud
+    ignore_errors: True
     become_user: "{{ web_user[ansible_distribution] }}"
     become_flags: "{{ ansible_become_flags | default(omit) }}"
     become: yes
     shell: >
       php occ  maintenance:install 
-      --database {{ nc_db_type }} 
+      --database "{{ nc_db_type }}"
       --database-host "{{ nc_db_host }}" 
-      --database-name {{ nc_db }} 
-      --database-user {{ nc_db_user }} 
-      --database-pass {{ nc_db_passwd }} 
-    #  --admin-user {{ nc_admin }} 
-    #  --admin-pass {{ nc_passwd }} 
-    #  --data-dir {{ nc_datadir }}
+      --database-name "{{ nc_db }}"
+      --database-user "{{ nc_db_user }}" 
+      --database-pass "{{ nc_db_passwd }}" 
+      --admin-user "{{ nc_admin }}" 
+      --admin-pass "{{ nc_passwd }}" 
+      --data-dir "{{ nc_datadir }}"
     args:
       chdir: /var/www/nextcloud/
       creates: /var/www/nextcloud/config/config.php
@@ -73,16 +74,16 @@
       replace: "'overwrite.cli.url' => 'http://nsrv',"
     notify: Restart Apache
  
-  # - debug: var=setup_nc verbosity=2
+  - debug: var=setup_nc verbosity=2
   
-  # - name: set nextcloud domain config.php values
-  #   become_user: "{{ web_user[ansible_distribution] }}"
-  #   become_flags: "{{ ansible_become_flags | default(omit) }}"
-  #   become: yes
-  #   shell: php occ config:system:set {{ item.key }} {{ item.value }}
-  #   args:
-  #     chdir: /var/www/nextcloud/
-  #   with_items: "{{ nc_config }}"
+  - name: set nextcloud domain config.php values
+    become_user: "{{ web_user[ansible_distribution] }}"
+    become_flags: "{{ ansible_become_flags | default(omit) }}"
+    become: yes
+    shell: php occ config:system:set {{ item.key }} {{ item.value }}
+    args:
+      chdir: /var/www/nextcloud/
+    with_items: "{{ nc_config }}"
 
   # - name: set nextcloud mail config.php values
   #   become_user: "{{ web_user[ansible_distribution] }}"

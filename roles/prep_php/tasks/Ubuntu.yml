@@ -90,7 +90,17 @@
     - { regex: '^\s*pm.max_spare_servers\s*=', line: 'pm.max_spare_servers = 18' }
   notify: restart php-fpm
 
-
+- name: configure php apcu module
+  copy:
+    dest: /etc/php/{{ php_version }}/mods-available/apcu.ini
+    content: |
+      extension=apcu.so
+      apc.enable_cli=1
+    owner: root
+    group: root
+    mode: 0644
+    backup: true
+    
 # - name: configure php
 #   copy:
 #     src: "{{ item.file }}"

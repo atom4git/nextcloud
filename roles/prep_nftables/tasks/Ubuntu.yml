@@ -1,0 +1,10 @@
+---
+# Ubuntu related OS tasks
+
+
+- name: Install nftables
+  apt:
+    name: nftables
+    state: present
+  tags: 
+    - nftables

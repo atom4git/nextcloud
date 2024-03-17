@@ -1,0 +1,35 @@
+#!/usr/sbin/nft -f
+
+flush ruleset
+
+table inet filter {
+    chain input {
+        type filter hook input priority 0;
+
+        # Allow established connections
+        ct state established,related accept
+
+        # Allow loopback interface
+        iif lo accept
+
+        # Allow SSH (port 22)
+        tcp dport 22 accept
+
+        # Allow HTTP (port 80)
+        tcp dport 80 accept
+
+        # Allow HTTPS (port 443)
+        tcp dport 443 accept
+
+        # Drop all other traffic
+        drop
+    }
+    chain forward {
+        type filter hook forward priority 0;
+        drop
+    }
+    chain output {
+        type filter hook output priority 0;
+        accept
+    }
+}

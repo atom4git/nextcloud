@@ -1,0 +1,30 @@
+---
+# tasks file for prep_ufw
+
+- name: include os specific tasks
+  include_tasks: "{{ ansible_distribution }}.yml"
+
+- name: Configure nftables rules
+  template:
+    src: nftables.conf.j2
+    dest: /etc/nftables.conf
+  notify: Reload nftables
+  tags: 
+    - nftables
+
+- name: Set nftables.conf attributes
+  file:
+    path: /etc/nftables.conf
+    owner: root
+    group: root
+    mode: '0644'
+  tags: 
+    - nftables
+
+- name: Enable nftables service
+  service:
+    name: nftables
+    enabled: yes
+    state: started
+  tags: 
+    - nftables
