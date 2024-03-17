@@ -20,7 +20,7 @@
     # - { role: prep_talk,           when: talk_install == 'true' }
     # - { role: prep_collabora,      when: install_collabora == 'true' }
     # - { role: prep_onlyoffice,     when: install_onlyoffice == 'true' }
-    # - { role: nc_fail2ban,         when: install_fail2ban == 'true' }
+    - { role: nc_fail2ban,         when: install_fail2ban == 'true' }
 
   post_tasks:
     - name: We are ready
