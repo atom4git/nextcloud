@@ -1,0 +1,11 @@
+---
+# tasks file for nfs
+
+- name: include os specific tasks
+  include_tasks: "{{ ansible_distribution }}.yml"
+
+- name: Configure NFS exports
+  ansible.builtin.lineinfile:
+    path: /etc/exports
+    line: "{{ nc_datadir }} *(rw,sync,no_subtree_check)"  # {{ nextcloud_client_ip }} or *
+  notify: restart nfs

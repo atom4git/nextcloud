@@ -139,28 +139,28 @@
     args:
       chdir: /var/www/nextcloud/
 
-  # - name: adjust app settings
-  #   become_user: "{{ web_user[ansible_distribution] }}"
-  #   become_flags: "{{ ansible_become_flags | default(omit) }}"
-  #   become: yes
-  #   shell: php occ app:{{ item.key }} {{ item.value }}
-  #   args:
-  #     chdir: /var/www/nextcloud/
-  #   with_items: "{{ nc_app_config }}"
+  - name: adjust app settings
+    become_user: "{{ web_user[ansible_distribution] }}"
+    become_flags: "{{ ansible_become_flags | default(omit) }}"
+    become: yes
+    shell: php occ app:{{ item.key }} {{ item.value }}
+    args:
+      chdir: /var/www/nextcloud/
+    with_items: "{{ nc_app_config }}"
 
-  # - name: add nextcloud cronjob
-  #   cron:
-  #     name: nextcloud cronjob
-  #     minute: '*/5'
-  #     user: "{{ web_user[ansible_distribution] }}"
-  #     job: "php -f /var/www/nextcloud/cron.php > /dev/null 2>&1"
+  - name: add nextcloud cronjob
+    cron:
+      name: nextcloud cronjob
+      minute: '*/5'
+      user: "{{ web_user[ansible_distribution] }}"
+      job: "php -f /var/www/nextcloud/cron.php > /dev/null 2>&1"
     
-  # - name: run nextcloud cronjob
-  #   become_user: "{{ web_user[ansible_distribution] }}"
-  #   become_flags: "{{ ansible_become_flags | default(omit) }}"
-  #   become: yes
-  #   shell: php -f /var/www/nextcloud/cron.php
-  #   args:
-  #     chdir: /var/www/nextcloud/
-  #   when: setup_nc is changed
+  - name: run nextcloud cronjob
+    become_user: "{{ web_user[ansible_distribution] }}"
+    become_flags: "{{ ansible_become_flags | default(omit) }}"
+    become: yes
+    shell: php -f /var/www/nextcloud/cron.php
+    args:
+      chdir: /var/www/nextcloud/
+    when: setup_nc is changed
   

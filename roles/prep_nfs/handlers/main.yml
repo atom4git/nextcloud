@@ -1,0 +1,7 @@
+---
+# handlers file for nc_fail22ban
+
+- name: restart nfs
+  ansible.builtin.service:
+    name: nfs-kernel-server
+    state: restarted
