@@ -116,20 +116,20 @@
       name: /tmp/nextcloud.config.json
       state: absent
 
-  # - debug: var=setup_nc verbosity=2
+  - debug: var=setup_nc verbosity=2
 
-  # - name: backup jobs, upgrade apps and database tuning
-  #   become_user: "{{ web_user[ansible_distribution] }}"
-  #   become_flags: "{{ ansible_become_flags | default(omit) }}"
-  #   become: yes
-  #   shell: php occ {{ item }}
-  #   args:
-  #     chdir: /var/www/nextcloud/
-  #   loop:
-  #     - background:cron
-  #     - upgrade
-  #     - db:add-missing-indices
-  #     - db:convert-filecache-bigint
+  - name: backup jobs, upgrade apps and database tuning
+    become_user: "{{ web_user[ansible_distribution] }}"
+    become_flags: "{{ ansible_become_flags | default(omit) }}"
+    become: yes
+    shell: php occ {{ item }}
+    args:
+      chdir: /var/www/nextcloud/
+    loop:
+      - background:cron
+      - upgrade
+      - db:add-missing-indices
+      - db:convert-filecache-bigint
       
   - name: upgrade nextcloud
     become_user: "{{ web_user[ansible_distribution] }}"

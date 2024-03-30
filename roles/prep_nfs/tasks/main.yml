@@ -4,8 +4,12 @@
 - name: include os specific tasks
   include_tasks: "{{ ansible_distribution }}.yml"
 
-- name: Configure NFS exports
+- name: Configure autofs map for NFS share
+  ansible.builtin.template:
+    src: autofs_nfs_map.j2
+    dest: /etc/auto.nfs
+
+- name: Configure autofs master map
   ansible.builtin.lineinfile:
-    path: /etc/exports
-    line: "{{ nc_datadir }} *(rw,sync,no_subtree_check)"  # {{ nextcloud_client_ip }} or *
-  notify: restart nfs
+    path: /etc/auto.master
+    line: "/var/www/nextcloud/data /etc/auto.nfs"

@@ -8,5 +8,5 @@
     name: "{{ item }}"
     state: present
   loop:
-    - nfs-kernel-server
     - nfs-common
+    - autofs
