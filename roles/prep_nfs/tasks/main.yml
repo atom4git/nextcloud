@@ -12,4 +12,16 @@
 - name: Configure autofs master map
   ansible.builtin.lineinfile:
     path: /etc/auto.master
-    line: "/var/www/nextcloud/data /etc/auto.nfs"
+    line: "/mnt/nextcloud /etc/auto.nfs --timeout=6000 --ghost"
+
+- name: Restart autofs service
+  ansible.builtin.service:
+    name: autofs
+    state: restarted
+
+- name: Create symlink from /mnt/nextcloud/data to /var/www/nextcloud
+  ansible.builtin.file:
+    src: /mnt/nextcloud/data
+    dest: /var/www/nextcloud
+    state: link
+    force: yes

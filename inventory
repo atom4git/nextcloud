@@ -24,8 +24,8 @@ ssl_certificate_type  = 'selfsigned'
 #server variables:
 srv_timezone         = 'America/Montreal'
 
-nfs_server           = "192.168.2.109"  # Replace with your NFS server IP
-nfs_path             = "/mnt/DP"     # Replace with your NFS share path
+nfs_server           = "192.168.2.52"  # Replace with your NFS server IP
+nfs_path             = "/mnt/dp1"     # Replace with your NFS share path
 
 #
 # Nextcloud varibales

@@ -7,7 +7,7 @@
   roles:
     # - { role: prep_ufw,         when: install_ufw == 'true' and (ansible_os_family == "Debian" or ansible_os_family == "Ubuntu") }
     - prep_os
-    #- prep_nfs
+    - prep_nfs
     - prep_redis
     # - prep_nginx
     - prep_apache2

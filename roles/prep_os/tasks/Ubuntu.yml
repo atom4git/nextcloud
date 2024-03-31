@@ -25,4 +25,6 @@
       - language-pack-en-base
       - software-properties-common
       - facter
+      - python3-pip
+      - cron
     state: latest

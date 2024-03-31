@@ -78,16 +78,23 @@
     line: 'memory_limit = 1G'
   notify: restart php-fpm
 
+- name: Uncomment opcache.save_comments directive in php.ini
+  ansible.builtin.lineinfile:
+    path: /etc/php/8.3/apache2/php.ini  # Adjust path based on your PHP version and server setup
+    regexp: '^;\s*opcache.save_comments\s*='
+    line: 'opcache.save_comments = 1'
+  notify: restart php-fpm
+
 - name: Optimize PHP-FPM configuration
   ansible.builtin.lineinfile:
     path: /etc/php/8.3/fpm/pool.d/www.conf
     regexp: '^{{ item.regex }}'
     line: "{{ item.line }}"
   loop:
-    - { regex: '^\s*pm.max_children\s*=', line: 'pm.max_children = 120' }
-    - { regex: '^\s*pm.start_servers\s*=', line: 'pm.start_servers = 12' }
-    - { regex: '^\s*pm.min_spare_servers\s*=', line: 'pm.min_spare_servers = 6' }
-    - { regex: '^\s*pm.max_spare_servers\s*=', line: 'pm.max_spare_servers = 18' }
+    - { regex: '^\s*pm.max_children\s*=', line: 'pm.max_children = 86' }
+    - { regex: '^\s*pm.start_servers\s*=', line: 'pm.start_servers = 21' }
+    - { regex: '^\s*pm.min_spare_servers\s*=', line: 'pm.min_spare_servers = 21' }
+    - { regex: '^\s*pm.max_spare_servers\s*=', line: 'pm.max_spare_servers = 64' }
   notify: restart php-fpm
 
 - name: configure php apcu module
@@ -100,7 +107,8 @@
     group: root
     mode: 0644
     backup: true
-    
+
+
 # - name: configure php
 #   copy:
 #     src: "{{ item.file }}"
